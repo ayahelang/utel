@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ page.title | default: site.title }}</title>
+
+  <!-- Tailwind (CDN for prototyping) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Bootstrap CSS (optional) -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- AOS -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+
+  <!-- Swiper CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
+
+  <!-- Lottie (player) -->
+  <script src="https://unpkg.com/@lottiefiles/lottie-player@1.5.7/dist/lottie-player.js"></script>
+
+  <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
+
+  <!-- GSAP & ScrollTrigger -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+  <!-- Locomotive Scroll (optional) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/locomotive-scroll@4.1.4/dist/locomotive-scroll.min.css"/>
+  <script src="https://cdn.jsdelivr.net/npm/locomotive-scroll@4.1.4/dist/locomotive-scroll.min.js"></script>
+
+  <!-- Swiper JS -->
+  <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+
+  <!-- AOS JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+
+  <meta name="description" content="{{ site.description }}">
+</head>
+<body class="antialiased bg-white text-slate-900">
+
+  <header class="navbar py-4 shadow-sm bg-white">
+    <div class="container mx-auto flex items-center justify-between px-4">
+      <div class="logo text-xl font-semibold"><a href="{{ '/' | relative_url }}">{{ site.title }}</a></div>
+      <nav class="hidden md:flex gap-4 items-center">
+        <a href="{{ '/' | relative_url }}" class="hover:underline">Beranda</a>
+        <a href="{{ '/articles' | relative_url }}" class="hover:underline">Artikel</a>
+        <a href="{{ '/about' | relative_url }}" class="hover:underline">Profil</a>
+        <a href="{{ '/portfolio' | relative_url }}" class="hover:underline">Portofolio</a>
+        <a href="{{ '/training' | relative_url }}" class="hover:underline">Pelatihan</a>
+        <a href="{{ '/contributors' | relative_url }}" class="hover:underline">Kontributor</a>
+      </nav>
+      <div class="flex items-center gap-3">
+        <button id="darkToggle" class="btn">🌓</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container mx-auto px-4 py-8">
+    {{ content }}
+  </main>
+
+  <footer class="border-t mt-12 py-8 bg-gray-50">
+    <div class="container mx-auto px-4 text-sm text-center">
+      © {{ site.time | date: "%Y" }} {{ site.title }} — Dibangun oleh Ted.
+    </div>
+  </footer>
+
+  <!-- Bootstrap JS bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Init AOS -->
+  <script> AOS.init(); </script>
+
+  <!-- Small helpers & default scripts -->
+  <script src="{{ '/assets/js/script.js' | relative_url }}"></script>
+
+  <script>
+  // Dark mode toggle
+  const dt = document.getElementById('darkToggle');
+  if(dt){
+    dt.addEventListener('click', ()=>{
+      document.documentElement.classList.toggle('dark');
+      localStorage.setItem('dark', document.documentElement.classList.contains('dark'));
+    });
+    if(localStorage.getItem('dark')==='true') document.documentElement.classList.add('dark');
+  }
+
+  // Simple Swiper default init (if present)
+  if(typeof Swiper !== 'undefined'){
+    document.addEventListener('DOMContentLoaded', ()=>{
+      const s = document.querySelector('.swiper');
+      if(s){
+        new Swiper('.swiper', { loop:true, autoplay:{delay:3500}, pagination:{el:'.swiper-pagination'}, navigation:{nextEl:'.swiper-button-next', prevEl:'.swiper-button-prev'} });
+      }
+    });
+  }
+
+  // GSAP example reveal for .hero-title
+  if(typeof gsap !== 'undefined'){
+    document.addEventListener('DOMContentLoaded', ()=>{
+      gsap.from('.hero-title',{y:40, opacity:0, duration:1, ease:'power3.out'});
+    });
+  }
+
+  // Locomotive Scroll basic init (if container exists)
+  if(typeof LocomotiveScroll !== 'undefined'){
+    try{
+      const locoEl = document.querySelector('[data-scroll-container]');
+      if(locoEl){
+        const loco = new LocomotiveScroll({el: locoEl, smooth:true});
+      }
+    }catch(e){console.warn(e)}
+  }
+  </script>
+
+</body>
+</html>

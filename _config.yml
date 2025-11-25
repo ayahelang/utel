@@ -1,0 +1,6 @@
+title: Dimas Supriyanto
+description: Jurnalisme & Opini - Dimas Supriyanto
+baseurl: ""
+url: "https://username.github.io"
+paginate: 10
+paginate_path: "/articles/page:num/"
